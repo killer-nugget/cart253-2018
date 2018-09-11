@@ -9,9 +9,15 @@
 
 // The image of a clown face
 var clownImage;
+
 // The current position of the clown face
 var clownImageX;
 var clownImageY;
+// the alien face
+var alienFace;
+//alien current position
+var alienX;
+var alienY;
 
 // The transparent image of "felt" that wipes down the canvas
 var feltTextureImage;
@@ -29,6 +35,7 @@ var circleColor;
 
 function preload() {
   clownImage = loadImage("assets/images/clown.png");
+  alienFace = loadImage("assets/images/alien.png")
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
 }
 
@@ -44,6 +51,10 @@ function setup() {
   // Start the clown image at the centre of the canvas
   clownImageX = width/2;
   clownImageY = height/2;
+
+  //Start alien in center canvas
+  alienX = width/2;
+  alienY = height/2;
 
   // Start the felt image perfectly off screen above the canvas
   feltTextureImageX = width/2;
@@ -80,6 +91,8 @@ function draw() {
 
   // Display the clown image
   image(clownImage,clownImageX,clownImageY);
+  //display alien
+  image(alienFace,alienX,alienY);
 
   // green-ish circle moving across the screen
 
