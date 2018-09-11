@@ -93,6 +93,9 @@ function draw() {
   image(clownImage,clownImageX,clownImageY);
   //display alien
   image(alienFace,alienX,alienY);
+  //alien follow cursor
+  alienX = mouseX;
+  alienY = mouseY;
 
   // green-ish circle moving across the screen
 
