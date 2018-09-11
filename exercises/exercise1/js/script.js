@@ -97,11 +97,11 @@ function draw() {
 
   // Display the clown image
   image(clownImage,clownImageX,clownImageY);
-  //display alien
-  image(alienFace,alienX,alienY);
-  //alien follow cursor
   alienX = mouseX;
   alienY = mouseY;
+  //display alien
+  image(alienFace,alienX,alienY);
+
 
   //display skull CENTER
   image(skullFace,skullX,skullY);
