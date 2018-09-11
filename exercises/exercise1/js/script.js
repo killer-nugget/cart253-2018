@@ -18,6 +18,9 @@ var alienFace;
 //alien current position
 var alienX;
 var alienY;
+//skull current position
+var skullX;
+var skullY;
 
 // The transparent image of "felt" that wipes down the canvas
 var feltTextureImage;
@@ -35,7 +38,8 @@ var circleColor;
 
 function preload() {
   clownImage = loadImage("assets/images/clown.png");
-  alienFace = loadImage("assets/images/alien.png")
+  alienFace = loadImage("assets/images/alien.png");
+  skullFace = loadImage("assets/images/skull.png");
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
 }
 
@@ -55,7 +59,9 @@ function setup() {
   //Start alien in center canvas
   alienX = width/2;
   alienY = height/2;
-
+  //start skull in middle
+  skullX = width/2;
+  skullY = height/2
   // Start the felt image perfectly off screen above the canvas
   feltTextureImageX = width/2;
   feltTextureImageY = 0 - feltTextureImage.height/2;
@@ -96,6 +102,9 @@ function draw() {
   //alien follow cursor
   alienX = mouseX;
   alienY = mouseY;
+
+  //display skull CENTER
+  image(skullFace,skullX,skullY);
 
   // green-ish circle moving across the screen
 
