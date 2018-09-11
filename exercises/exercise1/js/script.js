@@ -18,7 +18,10 @@ var feltTextureImage;
 // The current position of the transparent image of "felt"
 var feltTextureImageX;
 var feltTextureImageY;
-
+//circle variables
+var circleX = 0;
+var circleY = 250;
+var circleColor;
 
 // preload()
 //
@@ -48,6 +51,8 @@ function setup() {
 
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
+
+
 }
 
 
@@ -75,4 +80,14 @@ function draw() {
 
   // Display the clown image
   image(clownImage,clownImageX,clownImageY);
+
+  // green-ish circle moving across the screen
+
+  circleColor = color(143, 252, 70);
+  fill(circleColor);
+  circleX = circleX + 5;
+  ellipse(circleX,circleY,200,200);
+
+
+
 }
