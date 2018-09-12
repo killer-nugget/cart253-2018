@@ -86,25 +86,40 @@ function draw() {
   // Display the felt image
   image(feltTextureImage,feltTextureImageX,feltTextureImageY);
 
+  // calculate larger distance x,y for skull ---> 1/30th distance from mouse
+var skullFaceX = mouseX - skullX;
+var skullFaceY = mouseY - skullY;
+
+skullX = skullX + skullFaceX/30;
+skullY = skullY + skullFaceY/30;
+
+  //display skull
+  image(skullFace,skullX,skullY);
+
   // Move the clown by moving it 1/10th of its current distance from the mouse
 
   // Calculate the distance in X and in Y
   var xDistance = mouseX - clownImageX;
   var yDistance = mouseY - clownImageY;
+
+
   // Add 1/10th of the x and y distance to the clown's current (x,y) location
   clownImageX = clownImageX + xDistance/10;
   clownImageY = clownImageY + yDistance/10;
 
+
+
   // Display the clown image
   image(clownImage,clownImageX,clownImageY);
-  alienX = mouseX;
-  alienY = mouseY;
+
   //display alien
   image(alienFace,alienX,alienY);
 
+  //alien matches mouse position.
+  alienX = mouseX;
+  alienY = mouseY;
 
-  //display skull CENTER
-  image(skullFace,skullX,skullY);
+
 
   // green-ish circle moving across the screen
 
