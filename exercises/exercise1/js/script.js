@@ -27,7 +27,8 @@ var feltTextureImage;
 // The current position of the transparent image of "felt"
 var feltTextureImageX;
 var feltTextureImageY;
-//circle variables
+
+// starting position circle position
 var circleX = 0;
 var circleY = 250;
 var circleColor;
@@ -125,8 +126,8 @@ skullY = skullY + skullFaceY/30;
 
   circleColor = color(143, 252, 70);
   fill(circleColor);
-  circleX = circleX + 5;
-  ellipse(circleX,circleY,200,200);
+  circleX = circleX + 3;
+  ellipse(circleX,circleY,150,150);
 
 
 
