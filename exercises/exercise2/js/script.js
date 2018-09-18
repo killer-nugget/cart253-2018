@@ -33,6 +33,12 @@ var enemySpeedIncrease = 0.5;
 // How many dodges the player has made
 var dodges = 0;
 
+//preload for images
+function preload(){
+    avatar = loadImage("assets/images/avatar.png");
+    enemy = loadImage("assets/images/enemy.png");
+}
+
 // setup()
 //
 // Make the canvas, position the avatar and anemy
@@ -143,16 +149,21 @@ function draw() {
 
   // Display the current number of successful in the console
   console.log(dodges);
-noStroke();
+
+  noStroke();
+
+  imageMode(CENTER);
   // The player is black
   fill(0);
   // Draw the player as a circle
-  ellipse(avatarX,avatarY,avatarSize,avatarSize);
+
+  image(avatar,avatarX,avatarY,avatarSize,avatarSize);
 
   // The enemy is red
   fill(255,0,0);
   // Draw the enemy as a circle
-  ellipse(enemyX,enemyY,enemySize,enemySize);
+  image(enemy,enemyX,enemyY,enemySize,enemySize);
+  //ellipse(enemyX,enemyY,enemySize,enemySize);
   // Show score on screen
   fill(0);
   strokeWeight(6);
