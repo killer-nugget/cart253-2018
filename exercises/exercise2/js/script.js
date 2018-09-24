@@ -37,6 +37,8 @@ var dodges = 0;
 function preload(){
     avatar = loadImage("assets/images/avatar.png");
     enemy = loadImage("assets/images/enemy.png");
+    nightSky = loadImage("assets/images/nightsky.jpg");
+    death = loadImage("assets/images/death.png");
 }
 
 // setup()
@@ -106,6 +108,7 @@ function draw() {
   if (dist(enemyX,enemyY,avatarX,avatarY) < enemySize/2 + avatarSize/2) {
     // Tell the player they lost
     console.log("YOU LOSE!");
+
     // Reset the enemy's position
     enemyX = 0;
     enemyY = random(0,height);
@@ -150,9 +153,13 @@ function draw() {
   // Display the current number of successful in the console
   console.log(dodges);
 
+
   noStroke();
 
   imageMode(CENTER);
+  //Draw background img
+  image(nightSky,0,0);
+
   // The player is black
   fill(0);
   // Draw the player as a circle
