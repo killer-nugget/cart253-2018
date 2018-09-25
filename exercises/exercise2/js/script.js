@@ -39,7 +39,7 @@ function preload(){
     avatar = loadImage("assets/images/avatar.png");
     enemy = loadImage("assets/images/enemy.png");
     nightSky = loadImage("assets/images/nightsky.jpg");
-    
+
 }
 
 // setup()
@@ -108,31 +108,25 @@ function draw() {
   if (dist(enemyX,enemyY,avatarX,avatarY) < enemySize/2 + avatarSize/2) {
     // Tell the player they lost
     console.log("YOU LOSE!");
-
-    // Reset the enemy's position
-    enemyX = 0;
-    enemyY = random(0,height);
-    // Reset the enemy's size and speed
-    enemySize = 50;
-    enemySpeed = 5;
-    // Reset the avatar's position
-    avatarX = width/2;
-    avatarY = height/2;
-    // Reset the dodge counter
-    dodges = 0;
+    reset();
+    // // Reset the enemy's position
+    // enemyX = 0;
+    // enemyY = random(0,height);
+    // // Reset the enemy's size and speed
+    // enemySize = 50;
+    // enemySpeed = 5;
+    // // Reset the avatar's position
+    // avatarX = width/2;
+    // avatarY = height/2;
+    // // Reset the dodge counter
+    // dodges = 0;
   }
 
   // Check if the avatar has gone off the screen (cheating!)
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
     // If they went off the screen they lose in the same way as above.
     console.log("YOU LOSE!");
-    enemyX = 0;
-    enemyY = random(0,height);
-    enemySize = 50;
-    enemySpeed = 5;
-    avatarX = width/2;
-    avatarY = height/2;
-    dodges = 0;
+    reset();
   }
 
   // Check if the enemy has moved all the way across the screen
@@ -189,4 +183,14 @@ if (dodges === 5 || dodges === 10 || dodges === 15 || dodges === 20 || dodges ==
     text("LEVEL UP", width/2, height/2);
 
       }
+//reset function
+function reset() {
+  enemyX = 0;
+  enemyY = random(0,height);
+  enemySize = 50;
+  enemySpeed = 5;
+  avatarX = width/2;
+  avatarY = height/2;
+  dodges = 0;
+}
 }
