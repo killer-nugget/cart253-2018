@@ -32,13 +32,14 @@ var enemySpeedIncrease = 0.5;
 
 // How many dodges the player has made
 var dodges = 0;
+var dodgesLvl;
 
 //preload for images
 function preload(){
     avatar = loadImage("assets/images/avatar.png");
     enemy = loadImage("assets/images/enemy.png");
     nightSky = loadImage("assets/images/nightsky.jpg");
-    death = loadImage("assets/images/death.png");
+    
 }
 
 // setup()
@@ -47,6 +48,7 @@ function preload(){
 function setup() {
   // Create our playing area
   createCanvas(500,500);
+
 
   // Put the avatar in the centre
   avatarX = width/2;
@@ -66,8 +68,6 @@ function setup() {
 // Handle moving the avatar and enemy and checking for dodges and
 // game over situations.
 function draw() {
-  // A pink background
-  background(255,220,220);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -157,6 +157,7 @@ function draw() {
   noStroke();
 
   imageMode(CENTER);
+
   //Draw background img
   image(nightSky,0,0);
 
@@ -178,4 +179,14 @@ function draw() {
   textSize(40);
   textStyle(BOLD);
   text(dodges,450,50);
+
+//level up every 5 dodges
+if (dodges === 5 || dodges === 10 || dodges === 15 || dodges === 20 || dodges === 25 || dodges ===30) {
+    console.log("level up");
+    textAlign(CENTER);
+    textSize(32);
+    fill(255,0,0);
+    text("LEVEL UP", width/2, height/2);
+
+      }
 }
