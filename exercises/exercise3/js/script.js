@@ -15,6 +15,13 @@ var targetX;
 var targetY;
 var targetImage;
 
+var iconX;
+var iconY;
+var targetIcon;
+var iconBg;
+var iconBgX;
+var iconBgY;
+
 // The ten decoy images
 var decoyImage1;
 var decoyImage2;
@@ -111,6 +118,29 @@ function setup() {
 }
 
 function draw() {
+//draw small dog on top-right corner with background and stay the same depending on window size.
+  iconX = width - 100;
+  iconY = 50;
+  iconBgX = iconX;
+  iconBgY= iconY;
+
+  targetIcon=targetImage;
+
+  rectMode(CENTER);
+  noStroke();
+
+  fill(6, 12, 68);
+  rect(iconBgX,iconBgY, targetIcon.width+20, targetIcon.height+40);
+
+  imageMode(CENTER);
+  image(targetIcon, iconX, iconY,targetIcon.width/1.5,targetIcon.height/1.5);
+
+  fill(175,175,175);
+  textSize(24)
+  textAlign(CENTER);
+  text("Wanted",iconX,targetIcon.height-20);
+
+
   if (gameOver) {
     // Prepare our typography
     textFont("Helvetica");
