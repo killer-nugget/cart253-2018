@@ -175,14 +175,13 @@ function draw() {
   text(dodges,450,50);
 
 //level up every 5 dodges
-if (dodges === 5 || dodges === 10 || dodges === 15 || dodges === 20 || dodges === 25 || dodges ===30) {
+if (dodges % 5 === 0 && dodges !== 0) {
     console.log("level up");
     textAlign(CENTER);
     textSize(32);
     fill(255,0,0);
     text("LEVEL UP", width/2, height/2);
-
-      }
+}
 //reset function
 function reset() {
   enemyX = 0;
