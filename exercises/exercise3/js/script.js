@@ -103,9 +103,49 @@ function setup() {
     }
   }
 
-  // Once we've displayed all decoys, we choose a location for the target
+//draw rectangle.
+var rectangle = {
+  x:0,
+  y:0,
+  w:150,
+  h:150,
+  color:color(38, 78, 142),
+};
+
+fill(rectangle.color);
+noStroke();
+rect(rectangle.x,rectangle.y,rectangle.w,rectangle.h);
+
+//draw image of dog we are looking for in the corner.
+var iconImage = {
+  x:rectangle.w/2,
+  y:rectangle.h/2,
+};
+
+image(targetImage, iconImage.x, iconImage.y-20, targetImage.width/1.5,targetImage.height/1.5);
+
+//write the WANTED text
+var wantedTxt ={
+  x:iconImage.x,
+  y:iconImage.y,
+};
+textAlign(CENTER);
+textSize(32);
+fill(175);
+noStroke();
+
+text("WANTED",wantedTxt.x,wantedTxt.y+40)
+
+// Once we've displayed all decoys, we choose a location for the target
+targetX = random(0,width);
+targetY = random(0,height);
+
+while(targetX<rectangle.w && targetY<rectangle.h){
+  console.log("OVERLAP");
   targetX = random(0,width);
   targetY = random(0,height);
+  }
+
   // And draw it (this means it will always be on top)
   image(targetImage,targetX,targetY);
 }
@@ -119,13 +159,27 @@ function draw() {
     noStroke();
     fill(random(255));
     // Tell them they won!
-    text("YOU WINNED!",width/2,height/2);
-
+    text("YOU LOSTN'T!",width/2,height/2);
     noFill();
     stroke(random(255));
     strokeWeight(10);
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
+//move target when win!
+targetNoise();
   }
+}
+
+function targetNoise(){
+  var t = 0;
+  var targetWin={
+    x:targetX++,
+    y:targetY+noise(t),
+  };
+  t+=0.1;
+image(targetImage,targetWin.x,targetWin.y);
+
+
+
 }
 
 // mousePressed()
