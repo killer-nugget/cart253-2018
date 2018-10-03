@@ -14,6 +14,10 @@ https://creativenerds.co.uk/freebies/80-free-wildlife-icons-the-best-ever-animal
 var targetX;
 var targetY;
 var targetImage;
+//noise movement
+var tx;
+var ty;
+
 
 // The ten decoy images
 var decoyImage1;
@@ -148,10 +152,17 @@ while(targetX<rectangle.w && targetY<rectangle.h){
 
   // And draw it (this means it will always be on top)
   image(targetImage,targetX,targetY);
+//define tx, ty for noise value at (t)
+  tx=random(0,windowWidth);
+  ty=random(0,windowHeight);
+
 }
 
 function draw() {
   if (gameOver) {
+    background(0);
+    //move target when win!
+    targetNoise();
     // Prepare our typography
     textFont("Helvetica");
     textSize(128);
@@ -160,24 +171,26 @@ function draw() {
     fill(random(255));
     // Tell them they won!
     text("YOU LOSTN'T!",width/2,height/2);
-    noFill();
-    stroke(random(255));
-    strokeWeight(10);
-    ellipse(targetX,targetY,targetImage.width,targetImage.height);
-//move target when win!
-targetNoise();
+
   }
 }
 
-function targetNoise(){
-  var t = 0;
-  var targetWin={
-    x:targetX++,
-    y:targetY+noise(t),
-  };
-  t+=0.1;
-image(targetImage,targetWin.x,targetWin.y);
 
+//Noise movement for target after win.
+function targetNoise(){
+
+  var targetWin={
+    x: windowWidth*noise(tx),
+    y: windowHeight*noise(ty),
+    bgColor: noise(tx),
+  };
+image(targetImage,targetWin.x,targetWin.y);
+noFill();
+stroke(random(255));
+strokeWeight(10);
+ellipse(targetWin.x,targetWin.y,targetImage.width,targetImage.height);
+tx+=0.1;
+ty+=0.1;
 
 
 }

@@ -1,13 +1,22 @@
-var typedText = "";
+var x;
+var y;
+var tx;
+var ty;
+
 function setup() {
   createCanvas(500,500);
-  textSize(24);
-  textAlign(CENTER,CENTER);
+  tx = random(0,1000);
+  ty = random(0,1000);
 }
+
 function draw() {
   background(255);
-  text(typedText,width/2,height/2);
-}
-function keyTyped() {
-  typedText += key;
+
+  x = width * noise(tx);
+  y = height * noise(ty);
+
+  tx += 0.01;
+  ty += 0.01;
+
+  ellipse(x,y,10,10);
 }
