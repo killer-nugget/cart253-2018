@@ -33,7 +33,7 @@ var decoyImage10;
 
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
-var numDecoys = 100;
+var numDecoys = 1000;
 
 // Keep track of whether they've won
 var gameOver = false;
@@ -70,40 +70,67 @@ function setup() {
     // Choose a random location for this decoy
     var x = random(0,width);
     var y = random(0,height);
+
     // Generate a random number we can use for probability
     var r = random();
+
+    var sizeX=random(500,1000);
+    var sizeY=random(500,1000);
+
+    var ds1x=decoyImage1.width*noise(sizeX);
+    var ds2x=decoyImage2.width*noise(sizeX);
+    var ds3x=decoyImage3.width*noise(sizeX);
+    var ds4x=decoyImage4.width*noise(sizeX);
+    var ds5x=decoyImage5.width*noise(sizeX);
+    var ds6x=decoyImage6.width*noise(sizeX);
+    var ds7x=decoyImage7.width*noise(sizeX);
+    var ds8x=decoyImage8.width*noise(sizeX);
+    var ds9x=decoyImage9.width*noise(sizeX);
+    var ds10x=decoyImage10.width*noise(sizeX);
+    var ds1y=decoyImage1.height*noise(sizeY);
+    var ds2y=decoyImage2.height*noise(sizeY);
+    var ds3y=decoyImage3.height*noise(sizeY);
+    var ds4y=decoyImage4.height*noise(sizeY);
+    var ds5y=decoyImage5.height*noise(sizeY);
+    var ds6y=decoyImage6.height*noise(sizeY);
+    var ds7y=decoyImage7.height*noise(sizeY);
+    var ds8y=decoyImage8.height*noise(sizeY);
+    var ds9y=decoyImage9.height*noise(sizeY);
+    var ds10y=decoyImage10.height*noise(sizeY);
+    var tix=targetImage.width*noise(sizeX);
+    var tiy=targetImage.height*noise(sizeY);
     // Use the random number to display one of the ten decoy
     // images, each with a 10% chance of being shown
     // We'll talk more about this nice quality of random soon enough
     if (r < 0.1) {
-      image(decoyImage1,x,y);
+      image(decoyImage1,x,y,ds1x,ds1y);
     }
     else if (r < 0.2) {
-      image(decoyImage2,x,y);
+      image(decoyImage2,x,y,ds2x,ds2y);
     }
     else if (r < 0.3) {
-      image(decoyImage3,x,y);
+      image(decoyImage3,x,y,ds3x,ds3y);
     }
     else if (r < 0.4) {
-      image(decoyImage4,x,y);
+      image(decoyImage4,x,y,ds4x,ds4y);
     }
     else if (r < 0.5) {
-      image(decoyImage5,x,y);
+      image(decoyImage5,x,y,ds5x,ds5y);
     }
     else if (r < 0.6) {
-      image(decoyImage6,x,y);
+      image(decoyImage6,x,y,ds6x,ds6y);
     }
     else if (r < 0.7) {
-      image(decoyImage7,x,y);
+      image(decoyImage7,x,y,ds7x,ds7y);
     }
     else if (r < 0.8) {
-      image(decoyImage8,x,y);
+      image(decoyImage8,x,y,ds8x,ds8y);
     }
     else if (r < 0.9) {
-      image(decoyImage9,x,y);
+      image(decoyImage9,x,y,ds9x,ds9y);
     }
     else if (r < 1.0) {
-      image(decoyImage10,x,y);
+      image(decoyImage10,x,y,ds10x,ds10y);
     }
   }
 
@@ -151,7 +178,7 @@ while(targetX<rectangle.w && targetY<rectangle.h){
   }
 
   // And draw it (this means it will always be on top)
-  image(targetImage,targetX,targetY);
+  image(targetImage,targetX,targetY,tix,tiy);
 //define tx, ty for noise value at (t)
   tx=random(0,windowWidth);
   ty=random(0,windowHeight);
@@ -182,15 +209,14 @@ function targetNoise(){
   var targetWin={
     x: windowWidth*noise(tx),
     y: windowHeight*noise(ty),
-    bgColor: noise(tx),
   };
 image(targetImage,targetWin.x,targetWin.y);
 noFill();
 stroke(random(255));
 strokeWeight(10);
 ellipse(targetWin.x,targetWin.y,targetImage.width,targetImage.height);
-tx+=0.1;
-ty+=0.1;
+tx+=0.02;
+ty+=0.01;
 
 
 }
