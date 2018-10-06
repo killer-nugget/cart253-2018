@@ -9,7 +9,7 @@ Physics-based movement, keyboard controls, health/stamina,
 sprinting, random movement, screen wrap.
 
 
-1.Modify the way the prey moves to use Perlin noise and the noise() function instead of the random() function it uses now.
+1.DONE Modify the way the prey moves to use Perlin noise and the noise() function instead of the random() function it uses now.
 (You'll need to get rid of the conditional that chooses when the prey changes direction, it should only use noise()).
 
 2.Add the ability to "sprint" for the player when they hold down the shift key (using keyDown() in the handleInput() function for this is probably a good idea).
@@ -41,6 +41,7 @@ var playerRadius = 25;
 var playerVX = 0;
 var playerVY = 0;
 var playerMaxSpeed = 2;
+var playerBoost = playerMaxSpeed+2;
 // Player health
 var playerHealth;
 var playerMaxHealth = 255;
@@ -149,6 +150,35 @@ function handleInput() {
   else {
     playerVY = 0;
   }
+
+  //Check for speed increase if SHIFT key is pressed.
+  //Nested the original inputHandle
+
+  if (keyIsDown(SHIFT)){
+    //Boost also affect health by 0.5 more loss when boost.
+    playerHealth = (constrain(playerHealth - 0.5,0,playerMaxHealth))-0.5;
+
+    if (keyIsDown(LEFT_ARROW)) {
+      playerVX = -playerBoost;
+    }
+    else if (keyIsDown(RIGHT_ARROW)) {
+      playerVX = playerBoost;
+    }
+    else {
+      playerVX = 0;
+    }
+
+    if (keyIsDown(UP_ARROW)) {
+      playerVY = -playerBoost;
+    }
+    else if (keyIsDown(DOWN_ARROW)) {
+      playerVY = playerBoost;
+    }
+    else {
+      playerVY = 0;
+    }
+
+  }
 }
 
 // movePlayer()
@@ -226,8 +256,10 @@ function movePrey() {
   if (random() < 0.05) {
     // Set velocity based on random values to get a new direction
     // and speed of movement
-    // Use map() to convert from the 0-1 range of the random() function
+    // Use map() to convert from the 0-1 range of the noise() function
     // to the appropriate range of velocities for the prey
+
+    // variables to calculate noise  prey speed. X Y different/separate values!
     var nRspeedX=width*random(map(preyMaxSpeed,0,4,0,1));
     var nRspeedY=height*random(map(preyMaxSpeed,0,4,0,1));
 
