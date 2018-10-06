@@ -12,7 +12,7 @@ sprinting, random movement, screen wrap.
 1.DONE Modify the way the prey moves to use Perlin noise and the noise() function instead of the random() function it uses now.
 (You'll need to get rid of the conditional that chooses when the prey changes direction, it should only use noise()).
 
-2.Add the ability to "sprint" for the player when they hold down the shift key (using keyDown() in the handleInput() function for this is probably a good idea).
+2.DONE Add the ability to "sprint" for the player when they hold down the shift key (using keyDown() in the handleInput() function for this is probably a good idea).
 Make them lose health faster when they are sprinting. Don't forget to reset to the player's normal speed when they stop sprinting.
 
 3.Add variables and conditionals as needed to make the game more interesting to play by varying the player and prey's size, speed, visibility,
@@ -33,6 +33,7 @@ The new visuals and sounds should match the gameplay you created in step two
 
 // Track whether the game is over
 var gameOver = false;
+var gameOverTired = false;
 
 // Player position, size, velocity
 var playerX;
@@ -40,8 +41,8 @@ var playerY;
 var playerRadius = 25;
 var playerVX = 0;
 var playerVY = 0;
-var playerMaxSpeed = 2;
-var playerBoost = playerMaxSpeed+2;
+var playerMaxSpeed = 5;
+
 // Player health
 var playerHealth;
 var playerMaxHealth = 255;
@@ -54,7 +55,7 @@ var preyY;
 var preyRadius = 25;
 var preyVX;
 var preyVY;
-var preyMaxSpeed = 4;
+var preyMaxSpeed = 7;
 // Prey health
 var preyHealth;
 var preyMaxHealth = 100;
@@ -122,6 +123,27 @@ function draw() {
   }
   else {
     showGameOver();
+    noLoop();
+
+  }
+  if(!gameOverTired){
+    handleInput();
+
+    movePlayer();
+    movePrey();
+
+    updateHealth();
+    checkEating();
+
+    drawPrey();
+    drawPlayer();
+  }
+  else{
+    background(0);
+    showGameOverTired();
+    noLoop();
+
+
   }
 }
 
@@ -156,7 +178,8 @@ function handleInput() {
 
   if (keyIsDown(SHIFT)){
     //Boost also affect health by 0.5 more loss when boost.
-    playerHealth = (constrain(playerHealth - 0.5,0,playerMaxHealth))-0.5;
+    playerHealth = (constrain(playerHealth - 0.5,0,playerMaxHealth))-0.2;
+    var playerBoost = playerMaxSpeed+(playerMaxSpeed/2);
 
     if (keyIsDown(LEFT_ARROW)) {
       playerVX = -playerBoost;
@@ -179,6 +202,7 @@ function handleInput() {
     }
 
   }
+
 }
 
 // movePlayer()
@@ -204,6 +228,13 @@ function movePlayer() {
   else if (playerY > height) {
     playerY -= height;
   }
+  //try to create a sluggish death! for now it work if you dont die from desappearing first.(don't know what to do yet!)
+  if(playerMaxSpeed<=2){
+    playerMaxSpeed+=-0.001;
+  }
+  if(playerMaxSpeed<=0){
+    gameOverTired=true;
+  }
 }
 
 // updateHealth()
@@ -213,6 +244,7 @@ function movePlayer() {
 function updateHealth() {
   // Reduce player health, constrain to reasonable range
   playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
+
   // Check if the player is dead
   if (playerHealth === 0) {
     // If so, the game is over
@@ -242,6 +274,28 @@ function checkEating() {
       preyHealth = preyMaxHealth;
       // Track how many prey were eaten
       preyEaten++;
+
+      //everytime the prey is eaten, the prey and the player slow down at random intervals. But prey never stops completly. Player will die before.
+    if(preyEaten++){
+      playerMaxSpeed+=-random(0.05,0.5);
+      preyMaxSpeed+=-random(0.05,1);
+      }
+      if(playerMaxSpeed==0){
+        playerBoost=0;
+      }
+      if (playerMaxSpeed<=0){
+      gameOverTired = true;
+
+      if(preyMaxSpeed<=1){
+        preyMaxSpeed+=random(0.1,1);
+      }
+      if (preyMaxSpeed>5) {
+        preyMaxSpeed+=-random(0.1,1)
+      }
+
+    }
+
+
     }
   }
 }
@@ -314,4 +368,14 @@ function showGameOver() {
   gameOverText += "You ate " + preyEaten + " prey\n";
   gameOverText += "before you died."
   text(gameOverText,width/2,height/2);
+}
+function showGameOverTired(){
+  textSize(32);
+  textAlign(CENTER,CENTER);
+  fill(255);
+  var gameOverText = "YOU'RE TIRED\n";
+  gameOverText += "You ate " + preyEaten + " prey\n";
+  gameOverText += "before you died of exhaustion."
+  text(gameOverText,width/2,height/2);
+
 }
