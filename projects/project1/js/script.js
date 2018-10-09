@@ -8,26 +8,26 @@ A simple game of cat and mouse.
 Physics-based movement, keyboard controls, health/stamina,
 sprinting, random movement, screen wrap.
 
+ \\\ We have discussed in class about how for me it is important to keep figure
+ abstracted. For me the game is more about chasing an "impossible dream".
+ The player is bound to die from chasing the impossible.
 
-1.DONE Modify the way the prey moves to use Perlin noise and the noise() function instead of the random() function it uses now.
-(You'll need to get rid of the conditional that chooses when the prey changes direction, it should only use noise()).
+The death screen is there to remind the player that he has wasted his time
+by chasing what he could never attain.
+In fact, the sounds used in the game are very recognisable sfx from Apple devices.
+They are used to simulate an exaggerated use of technology.
+I feel like these sounds have conditioned me to reach into my pockets
+and look at my phone and make sure I didn't miss a call or a message.
 
-2.DONE Add the ability to "sprint" for the player when they hold down the shift key (using keyDown() in the handleInput() function for this is probably a good idea).
-Make them lose health faster when they are sprinting. Don't forget to reset to the player's normal speed when they stop sprinting.
+The death screen plays the Apple ringtone.
+It's like missing the call I and/or player was waiting for.
 
-3.DONE Add variables and conditionals as needed to make the game more interesting to play by varying the player and prey's size, speed, visibility,
-and/or anything else you can think of during play (maybe the prey get harder to see as the player gets more successful, maybe the player gets bigger the more it eats, etc.)
- - try to have a reason why each thing happens.
+I think the sounds and the death screen give meaning to abstracted figures.
+In a sense, I feel like I have lost touch with reality and everytime I reach
+for my phone I waste my time. I could be using that time to get bored.
+Boredom is important. It's when I'm bored that I start to think.
 
-4.DONE Tune the values of the game's variables to make the gameplay more interesting to play (is the prey too slow? Should it move more erratically?
-Should the player be faster? Slower? Etc.)
-
-5.DONE Change the visuals of the game and add sounds so that the game is no longer abstract but conveys an idea through both its gameplay and through its aesthetics
-(maybe it could be about politics, or relationships, or cooking, or playing chess, or anything else!).
-The new visuals and sounds should match the gameplay you created in step two
-
-  *Make sure you use functions to better organise your code!
-  *Don't limit yourself to the above five challenges, if you've got the time, make the game even better!
+My thinking is impaired by technology. \\\
 
 ******************************************************/
 
@@ -368,18 +368,6 @@ function drawPlayer() {
   ellipse(playerX,playerY,playerRadius*2);
 }
 
-// showGameOver()
-//
-// Display text about the game being over!
-// function showGameOver() {
-//   textSize(32);
-//   textAlign(CENTER,CENTER);
-//   fill(0);
-//   var gameOverText = "GAME OVER\n";
-//   gameOverText += "You ate " + preyEaten + " prey\n";
-//   gameOverText += "before you died."
-//   text(gameOverText,width/2,height/2);
-// }
 function showGameOverTired(){
   textSize(32);
   textAlign(CENTER,CENTER);
