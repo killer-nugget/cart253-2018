@@ -15,14 +15,14 @@ sprinting, random movement, screen wrap.
 2.DONE Add the ability to "sprint" for the player when they hold down the shift key (using keyDown() in the handleInput() function for this is probably a good idea).
 Make them lose health faster when they are sprinting. Don't forget to reset to the player's normal speed when they stop sprinting.
 
-3.Add variables and conditionals as needed to make the game more interesting to play by varying the player and prey's size, speed, visibility,
+3.DONE Add variables and conditionals as needed to make the game more interesting to play by varying the player and prey's size, speed, visibility,
 and/or anything else you can think of during play (maybe the prey get harder to see as the player gets more successful, maybe the player gets bigger the more it eats, etc.)
  - try to have a reason why each thing happens.
 
-4.Tune the values of the game's variables to make the gameplay more interesting to play (is the prey too slow? Should it move more erratically?
+4.DONE Tune the values of the game's variables to make the gameplay more interesting to play (is the prey too slow? Should it move more erratically?
 Should the player be faster? Slower? Etc.)
 
-5.Change the visuals of the game and add sounds so that the game is no longer abstract but conveys an idea through both its gameplay and through its aesthetics
+5.DONE Change the visuals of the game and add sounds so that the game is no longer abstract but conveys an idea through both its gameplay and through its aesthetics
 (maybe it could be about politics, or relationships, or cooking, or playing chess, or anything else!).
 The new visuals and sounds should match the gameplay you created in step two
 
@@ -32,7 +32,7 @@ The new visuals and sounds should match the gameplay you created in step two
 ******************************************************/
 
 // Track whether the game is over
-var gameOver = false;
+// var gameOver = false;
 var gameOverTired = false;
 
 // Player position, size, velocity
@@ -66,10 +66,38 @@ var preyFill = 200;
 var eatHealth = 10;
 // Number of prey eaten during the game
 var preyEaten = 0;
+var soundIsPlaying = false;
 
 // setup()
 //
 // Sets up the basic elements of the game
+
+var ringtone;
+
+var sfxNames = [
+  "smsIn",
+  "smsOut",
+  "emailIn",
+  "emailOut"
+]
+
+var sfxArray = [];
+
+function preload(){
+//preload audio array with FOR loop
+  for (var i = 0; i < sfxNames.length; i++) {
+    sfxArray[i] = new Audio('assets/sounds/' + sfxNames[i] + '.wav');
+  }
+  ringtone=new Audio ('assets/sounds/ringtone.wav');
+
+
+}
+
+function playSFXrandom (){
+  //Math.floor rounds the nuber downward--> so it can == to index number
+  sfxArray[Math.floor(Math.random()*sfxArray.length)].play();
+}
+
 function setup() {
   createCanvas(500,500);
 
@@ -107,25 +135,18 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-  background(100,100,200);
+  background(preyX,preyY*2,preyX*0.5);
 
-  if (!gameOver) {
-    handleInput();
+  if (!soundIsPlaying) {
+    soundIsPlaying = true;
 
-    movePlayer();
-    movePrey();
+    setTimeout(function () {
+      soundIsPlaying = false;
+    }, 1000)
 
-    updateHealth();
-    checkEating();
-
-    drawPrey();
-    drawPlayer();
+    playSFXrandom();
   }
-  else {
-    showGameOver();
-    noLoop();
 
-  }
   if(!gameOverTired){
     handleInput();
 
@@ -141,6 +162,8 @@ function draw() {
   else{
     background(0);
     showGameOverTired();
+    setTimeout(1000);
+    ringtone.play();
     noLoop();
 
 
@@ -248,7 +271,7 @@ function updateHealth() {
   // Check if the player is dead
   if (playerHealth === 0) {
     // If so, the game is over
-    gameOver = true;
+    gameOverTired = true;
   }
 }
 
@@ -283,18 +306,6 @@ function checkEating() {
       if(playerMaxSpeed==0){
         playerBoost=0;
       }
-      if (playerMaxSpeed<=0){
-      gameOverTired = true;
-
-      if(preyMaxSpeed<=1){
-        preyMaxSpeed+=random(0.1,1);
-      }
-      if (preyMaxSpeed>5) {
-        preyMaxSpeed+=-random(0.1,1)
-      }
-
-    }
-
 
     }
   }
@@ -314,8 +325,8 @@ function movePrey() {
     // to the appropriate range of velocities for the prey
 
     // variables to calculate noise  prey speed. X Y different/separate values!
-    var nRspeedX=width*random(map(preyMaxSpeed,0,4,0,1));
-    var nRspeedY=height*random(map(preyMaxSpeed,0,4,0,1));
+    var nRspeedX=width*random(map(preyMaxSpeed,-preyMaxSpeed,preyMaxSpeed,0,1));
+    var nRspeedY=height*random(map(preyMaxSpeed,-preyMaxSpeed,preyMaxSpeed,0,1));
 
     preyVX = map(noise(nRspeedX),0,1,-preyMaxSpeed,preyMaxSpeed);
     preyVY = map(noise(nRspeedY),0,1,-preyMaxSpeed,preyMaxSpeed);
@@ -360,22 +371,24 @@ function drawPlayer() {
 // showGameOver()
 //
 // Display text about the game being over!
-function showGameOver() {
-  textSize(32);
-  textAlign(CENTER,CENTER);
-  fill(0);
-  var gameOverText = "GAME OVER\n";
-  gameOverText += "You ate " + preyEaten + " prey\n";
-  gameOverText += "before you died."
-  text(gameOverText,width/2,height/2);
-}
+// function showGameOver() {
+//   textSize(32);
+//   textAlign(CENTER,CENTER);
+//   fill(0);
+//   var gameOverText = "GAME OVER\n";
+//   gameOverText += "You ate " + preyEaten + " prey\n";
+//   gameOverText += "before you died."
+//   text(gameOverText,width/2,height/2);
+// }
 function showGameOverTired(){
   textSize(32);
   textAlign(CENTER,CENTER);
   fill(255);
-  var gameOverText = "YOU'RE TIRED\n";
-  gameOverText += "You ate " + preyEaten + " prey\n";
-  gameOverText += "before you died of exhaustion."
+  var gameOverText = "You've wasted your time\n";
+  // gameOverText += "You thaught you caught " + preyEaten + " prey\n";
+  gameOverText += "and died of exhaustion.\n";
+  gameOverText += "\n";
+  gameOverText += "But you were so close.";
   text(gameOverText,width/2,height/2);
 
 }
