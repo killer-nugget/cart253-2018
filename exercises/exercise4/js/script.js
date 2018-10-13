@@ -57,6 +57,15 @@ var rightPaddle = {
   upKeyCode: 38, // The key code for the UP ARROW
   downKeyCode: 40 // The key code for the DOWN ARROW
 }
+///////// NEW /////////
+
+//Keep Score for each paddle.
+var leftScore=0;
+
+var rightScore=0;
+
+///////// END NEW /////////
+
 
 // A variable to hold the beep sound we will play on bouncing
 var beepSFX;
@@ -261,6 +270,15 @@ function handleBallOffScreen() {
     // carries on moving with the same velocity after its
     // position is reset.
     // This is where we would count points etc!
+    ///////// NEW /////////
+    if (ballRight<0){
+      console.log('Right:'+(rightScore));
+      leftScore++;
+    }
+    if (ballLeft>width){
+      console.log('Left:'+(leftScore));
+      rightScore++;
+    }
   }
 }
 
