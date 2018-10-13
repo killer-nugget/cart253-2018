@@ -270,14 +270,15 @@ function handleBallOffScreen() {
     // carries on moving with the same velocity after its
     // position is reset.
     // This is where we would count points etc!
+
     ///////// NEW /////////
     if (ballRight<0){
+      rightScore++;
       console.log('Right:'+(rightScore));
-      leftScore++;
     }
     if (ballLeft>width){
+      leftScore++;
       console.log('Left:'+(leftScore));
-      rightScore++;
     }
   }
 }
