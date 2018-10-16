@@ -8,7 +8,8 @@
 var bgColor = 0;
 var fgColor = 255;
 ////// NEW //////
-var fgAlpha= 255;
+var gameOverScreenActivated = false;
+var gameOver = false
 ////// END NEW //////
 
 // BALL
@@ -63,9 +64,9 @@ var rightPaddle = {
 ///////// NEW /////////
 
 //Keep Score for each paddle.
-var leftScore=0;
+var leftScore = 0;
 
-var rightScore=0;
+var rightScore = 0;
 
 ///////// END NEW /////////
 
@@ -87,7 +88,7 @@ function preload() {
 // and velocities.
 function setup() {
   // Create canvas and set drawing modes
-  createCanvas(640,480);
+  createCanvas(640, 480);
   rectMode(CENTER);
   noStroke();
   fill(fgColor);
@@ -102,19 +103,19 @@ function setup() {
 function setupPaddles() {
   // Initialise the left paddle
   leftPaddle.x = paddleInset;
-  leftPaddle.y = height/2;
+  leftPaddle.y = height / 2;
 
   // Initialise the right paddle
   rightPaddle.x = width - paddleInset;
-  rightPaddle.y = height/2;
+  rightPaddle.y = height / 2;
 }
 
 // setupBall()
 //
 // Sets the position and velocity of the ball
 function setupBall() {
-  ball.x = width/2;
-  ball.y = height/2;
+  ball.x = width / 2;
+  ball.y = height / 2;
   ball.vx = ball.speed;
   ball.vy = ball.speed;
 }
@@ -151,7 +152,14 @@ function draw() {
   displayPaddle(leftPaddle);
   displayPaddle(rightPaddle);
   displayBall();
+
+  ////// NEW //////
+  startCount();
+  gameOverScreen()
+  ////// END NEW //////
 }
+
+
 
 
 // handleInput(paddle)
@@ -182,8 +190,7 @@ function handleInput(paddle) {
   else if (keyIsDown(paddle.downKeyCode)) {
     // Move down
     paddle.vy = paddle.speed;
-  }
-  else {
+  } else {
     // Otherwise stop moving
     paddle.vy = 0;
   }
@@ -208,10 +215,10 @@ function updatePosition(object) {
 function handleBallWallCollision() {
 
   // Calculate edges of ball for clearer if statement below
-  var ballTop = ball.y - ball.size/2;
-  var ballBottom = ball.y + ball.size/2;
-  var ballLeft = ball.x - ball.size/2;
-  var ballRight = ball.x + ball.size/2;
+  var ballTop = ball.y - ball.size / 2;
+  var ballBottom = ball.y + ball.size / 2;
+  var ballLeft = ball.x - ball.size / 2;
+  var ballRight = ball.x + ball.size / 2;
 
   // Check for ball colliding with top and bottom
   if (ballTop < 0 || ballBottom > height) {
@@ -230,16 +237,16 @@ function handleBallWallCollision() {
 function handleBallPaddleCollision(paddle) {
 
   // Calculate edges of ball for clearer if statements below
-  var ballTop = ball.y - ball.size/2;
-  var ballBottom = ball.y + ball.size/2;
-  var ballLeft = ball.x - ball.size/2;
-  var ballRight = ball.x + ball.size/2;
+  var ballTop = ball.y - ball.size / 2;
+  var ballBottom = ball.y + ball.size / 2;
+  var ballLeft = ball.x - ball.size / 2;
+  var ballRight = ball.x + ball.size / 2;
 
   // Calculate edges of paddle for clearer if statements below
-  var paddleTop = paddle.y - paddle.h/2;
-  var paddleBottom = paddle.y + paddle.h/2;
-  var paddleLeft = paddle.x - paddle.w/2;
-  var paddleRight = paddle.x + paddle.w/2;
+  var paddleTop = paddle.y - paddle.h / 2;
+  var paddleBottom = paddle.y + paddle.h / 2;
+  var paddleLeft = paddle.x - paddle.w / 2;
+  var paddleRight = paddle.x + paddle.w / 2;
 
   // First check it is in the vertical range of the paddle
   if (ballBottom > paddleTop && ballTop < paddleBottom) {
@@ -261,28 +268,29 @@ function handleBallPaddleCollision(paddle) {
 function handleBallOffScreen() {
 
   // Calculate edges of ball for clearer if statement below
-  var ballLeft = ball.x - ball.size/2;
-  var ballRight = ball.x + ball.size/2;
+  var ballLeft = ball.x - ball.size / 2;
+  var ballRight = ball.x + ball.size / 2;
 
   // Check for ball going off the sides
   if (ballRight < 0 || ballLeft > width) {
     // If it went off either side, reset it to the centre
-    ball.x = width/2;
-    ball.y = height/2;
+    ball.x = width / 2;
+    ball.y = height / 2;
     // NOTE that we don't change its velocity here so it just
     // carries on moving with the same velocity after its
     // position is reset.
     // This is where we would count points etc!
 
     ///////// NEW /////////
-    if (ballRight<0){
+    if (ballRight < 0) {
       rightScore++;
-      console.log('Right:'+(rightScore));
+      console.log('Right:' + (rightScore));
     }
-    if (ballLeft>width){
+    if (ballLeft > width) {
       leftScore++;
-      console.log('Left:'+(leftScore));
+      console.log('Left:' + (leftScore));
     }
+    ////// END NEW ////////
   }
 }
 
@@ -292,9 +300,9 @@ function handleBallOffScreen() {
 function displayBall() {
   ////// NEW //////
   noStroke();
-  fill(fgColor,fgColor,fgColor,fgAlpha);
+  fill(fgColor);
   ////// END NEW //////
-  rect(ball.x,ball.y,ball.size,ball.size);
+  rect(ball.x, ball.y, ball.size, ball.size);
 
 }
 
@@ -302,5 +310,33 @@ function displayBall() {
 //
 // Draws the specified paddle on screen based on its properties
 function displayPaddle(paddle) {
-  rect(paddle.x,paddle.y,paddle.w,paddle.h);
+  rect(paddle.x, paddle.y, paddle.w, paddle.h);
+}
+
+
+function startCount () {
+  if (leftScore === 7 || rightScore === 7) {
+    if (gameOverScreenActivated === false) {
+      gameOverScreenActivated = true;
+      setTimeout(function() {
+        console.log('five seconds later');
+        gameOver = true;
+      }, 5000);
+    }
+  }
+}
+
+function gameOverScreen() {
+  if (gameOver) {
+    console.log('here')
+    background(0);
+    textAlign(CENTER);
+    textSize(32);
+    var gameOverText = "LOOKS LIKE SOMEONE LOST.\n";
+    gameOverText += "SUDDEN DEATH\n";
+    gameOverText += "ROCK, PAPER, SCISSORS.\n";
+    fill(255, 0, 0);
+    text(gameOverText, width / 2, height / 2);
+    noLoop();
+  }
 }
