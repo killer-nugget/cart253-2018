@@ -274,8 +274,7 @@ function handleBallOffScreen() {
   // Check for ball going off the sides
   if (ballRight < 0 || ballLeft > width) {
     // If it went off either side, reset it to the centre
-    ball.x = width / 2;
-    ball.y = height / 2;
+    ballReset();
     // NOTE that we don't change its velocity here so it just
     // carries on moving with the same velocity after its
     // position is reset.
@@ -313,6 +312,10 @@ function displayPaddle(paddle) {
   rect(paddle.x, paddle.y, paddle.w, paddle.h);
 }
 
+function ballReset(){
+  ball.x = width / 2;
+  ball.y = height / 2;
+}
 
 function startCount () {
   if (leftScore === 7 || rightScore === 7) {
