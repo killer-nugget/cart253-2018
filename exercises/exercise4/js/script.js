@@ -7,6 +7,9 @@
 // Game colors
 var bgColor = 0;
 var fgColor = 255;
+////// NEW //////
+var fgAlpha= 255;
+////// END NEW //////
 
 // BALL
 
@@ -287,7 +290,12 @@ function handleBallOffScreen() {
 //
 // Draws ball on screen based on its properties
 function displayBall() {
+  ////// NEW //////
+  noStroke();
+  fill(fgColor,fgColor,fgColor,fgAlpha);
+  ////// END NEW //////
   rect(ball.x,ball.y,ball.size,ball.size);
+
 }
 
 // displayPaddle(paddle)
