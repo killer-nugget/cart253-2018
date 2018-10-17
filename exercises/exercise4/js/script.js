@@ -19,16 +19,19 @@ var gameOver = false
 var ball = {
   x: 0,
   y: 0,
-  size: 20,
+  size: 15,
   vx: 0,
   vy: 0,
-  speed: 5
+  speed: 5,
+  ////// NEW //////
+  maxSpeed:10
+  ////// END NEW //////
 }
 
 // PADDLES
 
 // How far in from the walls the paddles should be drawn on x
-var paddleInset = 50;
+var paddleInset = 25;
 
 // LEFT PADDLE
 
@@ -37,11 +40,11 @@ var paddleInset = 50;
 var leftPaddle = {
   x: 0,
   y: 0,
-  w: 20,
-  h: 70,
+  w: 10,
+  h: 80,
   vx: 0,
   vy: 0,
-  speed: 5,
+  speed: 15,
   upKeyCode: 87, // The key code for W
   downKeyCode: 83 // The key code for S
 }
@@ -53,11 +56,11 @@ var leftPaddle = {
 var rightPaddle = {
   x: 0,
   y: 0,
-  w: 20,
-  h: 70,
+  w: 10,
+  h: 80,
   vx: 0,
   vy: 0,
-  speed: 5,
+  speed: 15,
   upKeyCode: 38, // The key code for the UP ARROW
   downKeyCode: 40 // The key code for the DOWN ARROW
 }
@@ -79,6 +82,8 @@ var beepSFX;
 // Loads the beep audio for the sound of bouncing
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
+  mkFinish = new Audio("assets/sounds/mk3-finish.mp3");
+  mkLaugh = new Audio("assets/sounds/mk3-laugh.mp3");
 }
 
 // setup()
@@ -253,12 +258,15 @@ function handleBallPaddleCollision(paddle) {
     // Then check if it is touching the paddle horizontally
     if (ballLeft < paddleRight && ballRight > paddleLeft) {
       // Then the ball is touching the paddle so reverse its vx
-      ball.vx = -ball.vx;
+      // and increase ball.vx by half the current ball.vx
+      ball.vx = -1.5*ball.vx;
       // Play our bouncing sound effect by rewinding and then playing
       beepSFX.currentTime = 0;
       beepSFX.play();
     }
   }
+
+
 }
 
 // handleBallOffScreen()
@@ -311,35 +319,53 @@ function displayBall() {
 function displayPaddle(paddle) {
   rect(paddle.x, paddle.y, paddle.w, paddle.h);
 }
-
+////// NEW ///////
 function ballReset(){
-  ball.x = width / 2;
-  ball.y = height / 2;
-}
+  var ballLeft = ball.x - ball.size / 2;
+  var ballRight = ball.x + ball.size / 2;
+  ball.x=width/2;
+  ball.y=height/2;
+  // check if off screen to the right and throws ball at left with random vx/vy
+  if(ballLeft > width){
+    ball.vx = -(random(4,ball.maxSpeed));
+    ball.vy = -(random(-5,ball.maxSpeed));
 
+  }
+  // else throws ball at rightScore with random vx/vy
+  else {
+    ball.vx = random(4,ball.maxSpeed);
+    ball.vy = random(-5,ball.maxSpeed);
+  }
+}
+// function that will activate a 6 second count down before
+//showing game over screen. (+1 point for halloween theme *666*)
 function startCount () {
-  if (leftScore === 7 || rightScore === 7) {
+  if (leftScore === 6 || rightScore === 6) {
     if (gameOverScreenActivated === false) {
       gameOverScreenActivated = true;
+      mkLaugh.play();
+      mkLaugh.loop = false;
       setTimeout(function() {
-        console.log('five seconds later');
+        console.log('six seconds later');
         gameOver = true;
-      }, 5000);
+      }, 6000);
     }
   }
 }
-
+//
 function gameOverScreen() {
   if (gameOver) {
     console.log('here')
     background(0);
     textAlign(CENTER);
     textSize(32);
-    var gameOverText = "LOOKS LIKE SOMEONE LOST.\n";
+    var gameOverText = "LOOKS LIKE SOMEONE WILL LOSE\n";
     gameOverText += "SUDDEN DEATH\n";
     gameOverText += "ROCK, PAPER, SCISSORS.\n";
     fill(255, 0, 0);
     text(gameOverText, width / 2, height / 2);
+    mkFinish.play();
     noLoop();
   }
+  ////// END NEW //////
 }
