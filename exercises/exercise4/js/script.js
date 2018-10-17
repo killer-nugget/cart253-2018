@@ -1,8 +1,13 @@
 // Pong
-// by Pippin Barr
 //
-// A primitive implementation of Pong with no scoring system
-// just the ability to play the game with the keyboard.
+// by Carlos Giron-Bran
+//
+//
+//
+// An implementation of Pong with IRL winning system.
+//
+// !!! PLEASE FIND A FRIEND TO PLAY WITH !!!
+
 
 // Game colors
 var bgColor = 0;
@@ -19,7 +24,7 @@ var gameOver = false
 var ball = {
   x: 0,
   y: 0,
-  size: 15,
+  size: 10,
   vx: 0,
   vy: 0,
   speed: 5,
@@ -93,7 +98,7 @@ function preload() {
 // and velocities.
 function setup() {
   // Create canvas and set drawing modes
-  createCanvas(640, 480);
+  createCanvas(1250, 480);
   rectMode(CENTER);
   noStroke();
   fill(fgColor);
@@ -130,7 +135,8 @@ function setupBall() {
 // Calls the appropriate functions to run the game
 function draw() {
   // Fill the background
-  background(bgColor);
+  // Leaves trail by adding Alpha channel
+  background(bgColor,150);
 
   // Handle input
   // Notice how we're using the SAME FUNCTION to handle the input
@@ -327,20 +333,20 @@ function ballReset(){
   ball.y=height/2;
   // check if off screen to the right and throws ball at left with random vx/vy
   if(ballLeft > width){
-    ball.vx = -(random(4,ball.maxSpeed));
+    ball.vx = -(random(7,ball.maxSpeed));
     ball.vy = -(random(-5,ball.maxSpeed));
 
   }
   // else throws ball at rightScore with random vx/vy
   else {
-    ball.vx = random(4,ball.maxSpeed);
+    ball.vx = random(7,ball.maxSpeed);
     ball.vy = random(-5,ball.maxSpeed);
   }
 }
-// function that will activate a 6 second count down before
-//showing game over screen. (+1 point for halloween theme *666*)
+// function that will activate a 15 second count down before
+//showing game over screen.
 function startCount () {
-  if (leftScore === 6 || rightScore === 6) {
+  if (leftScore === 10 || rightScore === 10) {
     if (gameOverScreenActivated === false) {
       gameOverScreenActivated = true;
       mkLaugh.play();
@@ -348,7 +354,7 @@ function startCount () {
       setTimeout(function() {
         console.log('six seconds later');
         gameOver = true;
-      }, 6000);
+      }, 15000);
     }
   }
 }
@@ -358,10 +364,12 @@ function gameOverScreen() {
     console.log('here')
     background(0);
     textAlign(CENTER);
-    textSize(32);
-    var gameOverText = "LOOKS LIKE SOMEONE WILL LOSE\n";
-    gameOverText += "SUDDEN DEATH\n";
-    gameOverText += "ROCK, PAPER, SCISSORS.\n";
+    textSize(20);
+    var gameOverText = "SOMEONE HAS TO LOSE\n";
+    gameOverText += "\n";
+    gameOverText += "SUDDEN DEATH!\n";
+    gameOverText += "\n";
+    gameOverText += "ROCK, PAPER, SCISSORS\n";
     fill(255, 0, 0);
     text(gameOverText, width / 2, height / 2);
     mkFinish.play();
