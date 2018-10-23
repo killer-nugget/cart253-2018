@@ -47,7 +47,7 @@ Ball.prototype.isOffScreen = function () {
   else {
     return false;
   }
-  
+
 }
 
 // display()

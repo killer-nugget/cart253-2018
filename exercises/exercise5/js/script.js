@@ -13,10 +13,7 @@
 var ball;
 var leftPaddle;
 var rightPaddle;
-////// NEW //////
-var keepScore;
 
-////// END NEW //////
 
 // setup()
 //
@@ -26,19 +23,13 @@ function setup() {
   // Create a ball
   ball = new Ball(width/2,height/2,5,5,10,5);
   // Create the right paddle with UP and DOWN as controls
-  rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW);
+  rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW,0);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  leftPaddle = new Paddle(0,height/2,10,60,10,83,87);
+  leftPaddle = new Paddle(0,height/2,10,60,10,83,87,0);
 
 
-  ////// NEW //////
-  // Keeps score for both side.
 
-  keepScore = new Score(0,0);
-
-  keepScore.startScore();
-  ////// END NEW //////
 
 
 }
@@ -58,20 +49,29 @@ function draw() {
   rightPaddle.update();
 
   if (ball.isOffScreen()) {
+////// NEW //////
+    if(ball.x+ball.size<0){
+      rightPaddle.score++;
+      console.log('right:'+rightPaddle.score);
+    }
+
+    if(ball.x>width){
+      leftPaddle.score++;
+      console.log('left:'+leftPaddle.score);
+    }
+////// NEW END //////    
     ball.reset();
+
   }
 
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
 
+
   ball.display();
   leftPaddle.display();
   rightPaddle.display();
-/////// not sure how to use the Score class.
-if (ball.x + ball.size < 0 || ball.x > width ){
-  console.log('check score');
-  keepScore.updateScore();
-}
+
 
 
 
