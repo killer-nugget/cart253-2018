@@ -14,6 +14,7 @@ function Ball(x, y, vx, vy, size, speed) {
   this.vy = vy;
   this.size = size;
   this.speed = speed;
+  this.maxSpeed=10;
 }
 
 // update()
@@ -79,6 +80,19 @@ Ball.prototype.handleCollision = function(paddle) {
 //
 // Set position back to the middle of the screen
 Ball.prototype.reset = function() {
+  var ballLeft = this.x;
+  var ballRight = this.x + this.size;
+
   this.x = width / 2;
   this.y = height / 2;
+
+  if(ballLeft > width){
+    this.vx = -(random(7,this.maxSpeed));
+    this.vy = -(random(-5,this.maxSpeed));
+
+  }
+  else {
+    this.vx = random(7,this.maxSpeed);
+    this.vy = random(-5,this.maxSpeed);
+  }
 }
