@@ -74,6 +74,9 @@ Ball.prototype.handleCollision = function(paddle) {
       ////// NEW //////
       //every collision with paddles, increse speed by 20%
       this.vx = -1.2*this.vx;
+     //beep sound when collision with paddles.    
+      beepSFX.currentTime = 0;
+      beepSFX.play();
     }
     ////// END NEW //////
   }
