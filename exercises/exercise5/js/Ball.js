@@ -74,7 +74,7 @@ Ball.prototype.handleCollision = function(paddle) {
       ////// NEW //////
       //every collision with paddles, increse speed by 20%
       this.vx = -1.2*this.vx;
-     //beep sound when collision with paddles.    
+      //beep sound when collision with paddles.
       beepSFX.currentTime = 0;
       beepSFX.play();
     }
@@ -86,7 +86,7 @@ Ball.prototype.handleCollision = function(paddle) {
 //
 // Set position back to the middle of the screen
 Ball.prototype.reset = function() {
-////// NEW //////
+  ////// NEW //////
   // resets ball and throws ball at last point.
   var ballLeft = this.x;
   var ballRight = this.x + this.size;
@@ -103,5 +103,5 @@ Ball.prototype.reset = function() {
     this.vx = random(7,this.maxSpeed);
     this.vy = random(-5,this.maxSpeed);
   }
-////// NEW END //////
+  ////// NEW END //////
 }

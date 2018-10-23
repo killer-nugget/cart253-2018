@@ -1,8 +1,9 @@
-// Basic OO Pong
-// by Pippin Barr
+// R,P,S PONG
+// by Carlos Giron-Bran
+// Simple Pong with IRL winning.
 //
-// A primitive implementation of Pong with no scoring system
-// just the ability to play the game with the keyboard.
+// The intent of this version of pong is to take a moment and interact
+// with your opponent IRL and have a chance to win regardless of skill level.
 //
 // Arrow keys control the right hand paddle, W and S control
 // the left hand paddle.
@@ -42,9 +43,9 @@ function setup() {
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(0, height / 2, 10, 80, 15, 83, 87, 0);
 
-////// NEW //////
+  ////// NEW //////
   death = new Death();
-////// END NEW //////
+  ////// END NEW //////
 
 }
 
@@ -84,13 +85,13 @@ function draw() {
   ball.display();
   leftPaddle.display();
   rightPaddle.display();
-/////// NEW //////
-// display scores at 1/4 of screen and at 3/4. Left and Right score respectively
+  /////// NEW //////
+  // display scores at 1/4 of screen and at 3/4. Left and Right score respectively
   textSize(32);
   text(leftPaddle.score,width/4,height/2);
   text(rightPaddle.score,(width/4)*3,height/2);
-// checks for death.
+  // checks for death.
   death.startCount();
   death.gameOverScreen()
-////// END NEW //////
+  ////// END NEW //////
 }
