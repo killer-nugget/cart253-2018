@@ -14,8 +14,7 @@ var ball;
 var leftPaddle;
 var rightPaddle;
 var bgColor=0;
-// var gameOverScreenActivated=false;
-// var gameOver=false;
+
 
 ////// NEW //////
 // preload sound effects
@@ -34,16 +33,18 @@ function preload() {
 //
 // Creates the ball and paddles
 function setup() {
-  createCanvas(640, 480);
+  createCanvas(1250, 480);
   // Create a ball
   ball = new Ball(width / 2, height / 2, 5, 5, 10, 5);
   // Create the right paddle with UP and DOWN as controls
-  rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 10, DOWN_ARROW, UP_ARROW, 0);
+  rightPaddle = new Paddle(width - 10, height / 2, 10, 80, 15, DOWN_ARROW, UP_ARROW, 0);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  leftPaddle = new Paddle(0, height / 2, 10, 60, 10, 83, 87, 0);
-  
+  leftPaddle = new Paddle(0, height / 2, 10, 80, 15, 83, 87, 0);
+
+////// NEW //////
   death = new Death();
+////// END NEW //////
 
 }
 
@@ -88,41 +89,8 @@ function draw() {
   textSize(32);
   text(leftPaddle.score,width/4,height/2);
   text(rightPaddle.score,(width/4)*3,height/2);
-
+// checks for death.
   death.startCount();
   death.gameOverScreen()
 ////// END NEW //////
-
 }
-
-// function startCount () {
-//   if (leftPaddle.score === 10 || rightPaddle.score === 10) {
-//     if (gameOverScreenActivated === false) {
-//       gameOverScreenActivated = true;
-//       mkLaugh.play();
-//       mkLaugh.loop = false;
-//       setTimeout(function() {
-//         console.log('six seconds later');
-//         gameOver = true;
-//       }, 15000);
-//     }
-//   }
-// }
-//
-// function gameOverScreen() {
-//   if (gameOver) {
-//     console.log('here')
-//     background(0);
-//     textAlign(CENTER);
-//     textSize(20);
-//     var gameOverText = "SOMEONE HAS TO LOSE\n";
-//     gameOverText += "\n";
-//     gameOverText += "SUDDEN DEATH!\n";
-//     gameOverText += "\n";
-//     gameOverText += "ROCK, PAPER, SCISSORS\n";
-//     fill(255, 0, 0);
-//     text(gameOverText, width / 2, height / 2);
-//     mkFinish.play();
-//     noLoop();
-//   }
-// }
