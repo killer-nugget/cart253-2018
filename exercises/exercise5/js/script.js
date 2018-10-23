@@ -13,24 +13,33 @@
 var ball;
 var leftPaddle;
 var rightPaddle;
+var bgColor=0;
 
+////// NEW //////
+// preload sound effects
+var beepSFX;
+var mkFinish;
+var mkLaugh;
+
+function preload() {
+  beepSFX = new Audio("assets/sounds/beep.wav");
+  mkFinish = new Audio("assets/sounds/mk3-finish.mp3");
+  mkLaugh = new Audio("assets/sounds/mk3-laugh.mp3");
+}
+////// END NEW //////
 
 // setup()
 //
 // Creates the ball and paddles
 function setup() {
-  createCanvas(640,480);
+  createCanvas(640, 480);
   // Create a ball
-  ball = new Ball(width/2,height/2,5,5,10,5);
+  ball = new Ball(width / 2, height / 2, 5, 5, 10, 5);
   // Create the right paddle with UP and DOWN as controls
-  rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW,0);
+  rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 10, DOWN_ARROW, UP_ARROW, 0);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  leftPaddle = new Paddle(0,height/2,10,60,10,83,87,0);
-
-
-
-
+  leftPaddle = new Paddle(0, height / 2, 10, 60, 10, 83, 87, 0);
 
 }
 
@@ -39,7 +48,7 @@ function setup() {
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
-  background(0);
+  background(bgColor,200);
 
   leftPaddle.handleInput();
   rightPaddle.handleInput();
@@ -49,17 +58,16 @@ function draw() {
   rightPaddle.update();
 
   if (ball.isOffScreen()) {
-////// NEW //////
-    if(ball.x+ball.size<0){
-      rightPaddle.score++;
-      console.log('right:'+rightPaddle.score);
+    ////// NEW //////
+    if (ball.x + ball.size < 0) {
+      rightPaddle.upScore();
+      //console.log('right:' + rightPaddle.score)
     }
-
-    if(ball.x>width){
-      leftPaddle.score++;
-      console.log('left:'+leftPaddle.score);
+    if (ball.x > width) {
+      leftPaddle.upScore();
+      //console.log('left:' + leftPaddle.score)
     }
-////// NEW END //////    
+    ////// NEW END //////
     ball.reset();
 
   }
@@ -71,8 +79,11 @@ function draw() {
   ball.display();
   leftPaddle.display();
   rightPaddle.display();
-
-
-
+/////// NEW //////
+// display scores at 1/4 of screen and at 3/4. Left and Right score respectively
+  textSize(32);
+  text(leftPaddle.score,width/4,height/2);
+  text(rightPaddle.score,(width/4)*3,height/2);
+////// END NEW //////
 
 }
