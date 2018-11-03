@@ -1,14 +1,11 @@
-// Pong
+// It's just Pong!
 // by Carlos Giron-Bran
 //
 
 //audio aesthetics of the game, etc.
 
-// Add a title to the game that displays before the game starts,
-//let the player start the game by clicking the mouse or hitting a key
 
-// Add an ending to the game when one player reaches 11 points (or some other number you choose),
-// display a game over screen and give the option to reset the game and play again
+//and give the option to reset the game and play again
 
 // Add a new class to the game that create a new kind of ball that the players should avoid when playing,
 //this ball should look different, should move differently, and if the players hit it
@@ -35,6 +32,11 @@ var leftPaddle;
 var rightPaddle;
 ////// NEW //////
 var state= "TITLE";
+
+var prize;
+var r;
+var prizeRandom;
+
 // setup()
 //
 // Creates the ball and paddles
@@ -47,6 +49,17 @@ function setup() {
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(0,height/2,10,60,10,83,87,0);
+
+  prize=[
+    "a poutine.",
+    "a cup of coffee.",
+    "2 dollars.",
+    " a slice of pizza."
+  ];
+
+  r =floor(random(0,prize.length));
+  prizeRandom = prize[r];
+
 }
 
 // draw()
@@ -139,10 +152,12 @@ if (rightPaddle.score===2 || leftPaddle.score===2) {
   state= "GAME OVER";
   }
 
+
 }
 
 function displayGameOver(){
   background(127,0,0);
+
   if (rightPaddle.score>=1) {
     rightPaddle.showScoreboardRight();
   }
@@ -164,17 +179,25 @@ function displayGameOver(){
     text("Player 1 is\nsuperior!",width/2,0.5*height/2);
     push();
     textSize(16);
-    text("Player 2 owes you respect.",width/2,(0.5*height/2)+50);
+    text("Player 2 owes you"+" "+ prizeRandom,width/2,(0.5*height/2)+50);
     pop();
+
 
   }
   if (leftPaddle.score===2) {
     text("Player 2 is\nsuperior!",width/2,0.5*height/2);
     push();
     textSize(16);
-    text("Player 1 owes you respect.",width/2,(0.5*height/2)+50);
+    text("Player 1 owes you"+" "+ prizeRandom,width/2,(0.5*height/2)+50);
     pop();
+
   }
+///////////////////////////////// I don't know what going on!!!!!
+  if (keyIsPressed && key === ' ') {
+
+    state = "TITLE";
+  }
+
 
 
 }
