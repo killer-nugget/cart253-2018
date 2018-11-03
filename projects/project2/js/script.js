@@ -2,8 +2,7 @@
 // by Carlos Giron-Bran
 //
 
-// Improve the game in the usual ways we have seen in previous exercises
-// by adding scores, displaying the score, changing the visual and audio aesthetics of the game, etc.
+//audio aesthetics of the game, etc.
 
 // Add a title to the game that displays before the game starts,
 //let the player start the game by clicking the mouse or hitting a key
@@ -34,12 +33,13 @@
 var ball;
 var leftPaddle;
 var rightPaddle;
-
+////// NEW //////
+var state= "TITLE";
 // setup()
 //
 // Creates the ball and paddles
 function setup() {
-  createCanvas(640,480);
+  createCanvas(1000,480);
   // Create a ball
   ball = new Ball(width/2,height/2,5,5,10,5);
   // Create the right paddle with UP and DOWN as controls
@@ -54,8 +54,49 @@ function setup() {
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
-  background(0);
+  background(0,0,0,150);
 
+////// NEW //////
+switch (state) {
+
+  case "TITLE":
+  displayTitle();
+  break;
+
+  case "GAME":
+  displayGame();
+  break;
+
+  case "GAME OVER":
+  displayGameOver();
+  break;
+}
+////// NEW END //////
+
+}
+////// NEW //////
+function displayTitle(){
+
+  textAlign(CENTER,CENTER);
+  textSize(32);
+  fill(255);
+  noStroke();
+  // Display the text
+  text("It's just\nPONG!",width/2,height/2);
+  // Font size goes down
+  textSize(16);
+  // Display the instructions
+  text("Press SPACE to play\n player 1: use W and S \n player 2: use Up and Down arrows",width/2,3*height/4);
+
+  // Check whether the spacebar was pressed to start the game...
+  if (keyIsPressed && key === ' ') {
+    // ... if it was, change the state to "GAME" so the switch statement in draw()
+    // will display the game instead
+    state = "GAME";
+  }
+}
+
+function displayGame(){
   leftPaddle.handleInput();
   rightPaddle.handleInput();
 
@@ -64,7 +105,8 @@ function draw() {
   rightPaddle.update();
 
   if (ball.isOffScreen()) {
-////// NEW //////
+
+// check which side the ball is off screen and gives points.
     if (ball.x + ball.size < 0) {
       leftPaddle.score++;
     }
@@ -86,27 +128,55 @@ function draw() {
 ////// NEW //////
 // scores displays when player makes it first point.
 if (rightPaddle.score>=1) {
-  showScoreboardRight();
+  rightPaddle.showScoreboardRight();
 }
 
 if (leftPaddle.score>=1) {
-  showScoreboardLeft();
-}
+  leftPaddle.showScoreboardLeft();
+  }
+// checks for winning condition and stops game.
+if (rightPaddle.score===2 || leftPaddle.score===2) {
+  state= "GAME OVER";
+  }
 
 }
 
-function showScoreboardRight () {
-  textAlign(CENTER);
+function displayGameOver(){
+  background(127,0,0);
+  if (rightPaddle.score>=1) {
+    rightPaddle.showScoreboardRight();
+  }
+
+  if (leftPaddle.score>=1) {
+    leftPaddle.showScoreboardLeft();
+    }
+
+  ball.display();
+  leftPaddle.display();
+  rightPaddle.display();
+
+  textAlign(CENTER,CENTER);
   textSize(32);
   fill(255);
-  text(rightPaddle.score,width/4, height/2);
+  noStroke();
+/// I really don't know why they are inverted here
+  if (rightPaddle.score===2) {
+    text("Player 1 is\nsuperior!",width/2,0.5*height/2);
+    push();
+    textSize(16);
+    text("Player 2 owes you respect.",width/2,(0.5*height/2)+50);
+    pop();
+
+  }
+  if (leftPaddle.score===2) {
+    text("Player 2 is\nsuperior!",width/2,0.5*height/2);
+    push();
+    textSize(16);
+    text("Player 1 owes you respect.",width/2,(0.5*height/2)+50);
+    pop();
+  }
+
 
 }
 
-function showScoreboardLeft () {
-  textAlign(CENTER);
-  textSize(32);
-  fill(255);
-  text(leftPaddle.score,(width/4)*3, height/2);
-}
 ////// NEW END //////

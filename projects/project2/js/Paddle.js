@@ -16,7 +16,7 @@ function Paddle(x,y,w,h,speed,downKey,upKey,score) {
   this.speed = speed;
   this.downKey = downKey;
   this.upKey = upKey;
-  this.score= score;
+  this.score = score;
 }
 
 // handleInput()
@@ -49,4 +49,20 @@ Paddle.prototype.update = function() {
 Paddle.prototype.display = function() {
   fill(255);
   rect(this.x,this.y,this.w,this.h);
+}
+
+
+Paddle.prototype.showScoreboardRight = function () {
+  textAlign(CENTER,CENTER);
+  textSize(32);
+  fill(255);
+  text(rightPaddle.score,width/4, height/2);
+
+}
+
+Paddle.prototype.showScoreboardLeft = function () {
+  textAlign(CENTER,CENTER);
+  textSize(32);
+  fill(255);
+  text(leftPaddle.score,(width/4)*3, height/2);
 }
