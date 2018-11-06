@@ -70,6 +70,7 @@ function draw() {
   background(0,0,0,150);
 
 ////// NEW //////
+console.log(state);
 switch (state) {
 
   case "TITLE":
@@ -180,6 +181,7 @@ function displayGameOver(){
     push();
     textSize(16);
     text("Player 2 owes you"+" "+ prizeRandom,width/2,(0.5*height/2)+50);
+    text("press spacebar to rematch",width/2,1.5*height/2);
     pop();
 
 
@@ -189,13 +191,16 @@ function displayGameOver(){
     push();
     textSize(16);
     text("Player 1 owes you"+" "+ prizeRandom,width/2,(0.5*height/2)+50);
+    text("press spacebar to rematch",width/2,1.5*height/2);
     pop();
 
   }
-///////////////////////////////// I don't know what going on!!!!!
-  if (keyIsPressed && key === ' ') {
 
-    state = "TITLE";
+//when spacebar is pressed, reset score and restart the game.
+  if (keyIsPressed && key === ' ') {
+   rightPaddle.scoreReset();
+   leftPaddle.scoreReset();
+    state = "GAME";
   }
 
 

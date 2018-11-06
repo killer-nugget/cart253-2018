@@ -66,3 +66,7 @@ Paddle.prototype.showScoreboardLeft = function () {
   fill(255);
   text(leftPaddle.score,(width/4)*3, height/2);
 }
+
+Paddle.prototype.scoreReset = function(){
+  this.score -= this.score;
+}
