@@ -76,6 +76,20 @@ Ball.prototype.handleCollision = function(paddle) {
       this.vx = -this.vx;
     }
   }
+////// NEW //////
+// handle collision w/ bad balls
+  if (this.x + this.size > BadBall.x && this.x < BadBall.x + BadBall.size ) {
+    // Check if the ball overlaps the paddle on y axis
+    if (this.y + this.size > BadBall.y && this.y < BadBall.y + BadBall.size) {
+      // If so, move ball back to previous position (by subtracting current velocity)
+      this.x -= this.vx;
+      this.y -= this.vy;
+      // Reverse x velocity to bounce
+      this.vx = -this.vx;
+    }
+  }
+////// NEW END ///////
+
 }
 
 // reset()
