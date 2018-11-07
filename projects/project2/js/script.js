@@ -31,7 +31,7 @@ function preload(){
 function setup() {
   createCanvas(1000, 480);
   // Create a ball
-  ball = new Ball(width / 2, height / 2, 5, 5, 10, 5, 10);
+  ball = new Ball(width / 2, height / 2, 5, 5, 10, 5, 15);
   // Create the right paddle with UP and DOWN as controls
   rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 15, DOWN_ARROW, UP_ARROW, 0);
   // Create the left paddle with W and S as controls
