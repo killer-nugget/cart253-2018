@@ -1,27 +1,9 @@
 // It's just Pong!
+// a Pong game where every point disadvantages the player.
+// And where you win real life prizes!
 // by Carlos Giron-Bran
-//
 
 //audio aesthetics of the game, etc.
-
-// Add a new class to the game that create a new kind of ball that the players should avoid when playing,
-//this ball should look different, should move differently, and if the players hit it
-//it should create some disadvantage for them (maybe it makes their paddle smaller,
-//maybe it makes the paddle slower, maybe it makes the paddle move randomly,
-//maybe it reverses the paddle controls, etc.), make sure you have at least one of these objects in the game
-
-// Add a new class to the game that creates a new kind of object different from Paddles and Balls
-//that interacts with the normal type of ball (maybe a kind of food the ball eats to get faster,
-//maybe a portal that teleports the ball somewhere else on the screen, maybe a light-switch that changes
-//the colors of the game to be lighter or darker, etc.),
-//make sure you have at least one of these objects in the game.
-
-// Use arrays to explore the dynamics of having many instances of objects in the game at the same time.
-//(e.g. At minimum have either multiple balls, multiple paddles, or multiples of your new classes - potentially all of these!)
-
-
-
-
 
 // Variable to contain the objects representing our ball and paddles
 var ball;
@@ -36,7 +18,11 @@ var prizeRandom;
 
 var bbArrayL = [];
 var bbArrayR = [];
+var beep;
 
+function preload(){
+  beep = new Audio ("assets/sounds/beep.wav");
+}
 ////// END NEW //////
 
 // setup()
@@ -45,12 +31,12 @@ var bbArrayR = [];
 function setup() {
   createCanvas(1000, 480);
   // Create a ball
-  ball = new Ball(width / 2, height / 2, 5, 5, 10, 5);
+  ball = new Ball(width / 2, height / 2, 5, 5, 10, 5, 10);
   // Create the right paddle with UP and DOWN as controls
-  rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 10, DOWN_ARROW, UP_ARROW, 0);
+  rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 15, DOWN_ARROW, UP_ARROW, 0);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  leftPaddle = new Paddle(0, height / 2, 10, 60, 10, 83, 87, 0);
+  leftPaddle = new Paddle(0, height / 2, 10, 60, 15, 83, 87, 0);
 
 
   prize = [
@@ -118,6 +104,7 @@ function displayGame() {
   leftPaddle.handleInput();
   rightPaddle.handleInput();
 
+
   ball.update();
   leftPaddle.update();
   rightPaddle.update();
@@ -127,12 +114,12 @@ function displayGame() {
     // check which side the ball is off screen and gives points.
     if (ball.x + ball.size < 0) {
       leftPaddle.score++;
-      bbArrayL.push(new BadBall(random(11, width / 2), random(0, height), 10));
+      bbArrayL.push(new BadBall(random(11, width / 2), random(0, height), 5));
     }
 
     if (ball.x > width) {
       rightPaddle.score++;
-      bbArrayR.push(new BadBall(random(width - 11, width / 2), random(0, height), 10));
+      bbArrayR.push(new BadBall(random(width - 11, width / 2), random(0, height), 5));
 
     }
     ////// NEW END //////
@@ -147,9 +134,11 @@ function displayGame() {
 
   for (var i = 0; i < bbArrayL.length; i++) {
     bbArrayL[i].display();
+    bbArrayL[i].collision();
   }
   for (var i = 0; i < bbArrayR.length; i++) {
     bbArrayR[i].display();
+    bbArrayR[i].collision();
   }
 
   leftPaddle.display();
@@ -168,7 +157,7 @@ function displayGame() {
     leftPaddle.showScoreboardLeft();
   }
   // checks for winning condition and stops game.
-  if (rightPaddle.score === 10 || leftPaddle.score === 10) {
+  if (rightPaddle.score === 15 || leftPaddle.score === 15) {
     state = "GAME OVER";
   }
 
@@ -196,7 +185,7 @@ function displayGameOver() {
   fill(255);
   noStroke();
   /// I really don't know why they are inverted here
-  if (rightPaddle.score === 10) {
+  if (rightPaddle.score === 15) {
     text("Player 1 is\nsuperior!", width / 2, 0.5 * height / 2);
     push();
     textSize(16);
@@ -206,7 +195,7 @@ function displayGameOver() {
 
 
   }
-  if (leftPaddle.score === 10) {
+  if (leftPaddle.score === 15) {
     text("Player 2 is\nsuperior!", width / 2, 0.5 * height / 2);
     push();
     textSize(16);

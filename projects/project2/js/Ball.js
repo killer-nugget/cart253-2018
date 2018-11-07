@@ -7,13 +7,14 @@
 // Ball constructor
 //
 // Sets the properties with the provided arguments
-function Ball(x,y,vx,vy,size,speed) {
+function Ball(x,y,vx,vy,size,speed,maxSpeed) {
   this.x = x;
   this.y = y;
   this.vx = vx;
   this.vy = vy;
   this.size = size;
   this.speed = speed;
+  this.maxSpeed= maxSpeed;
 }
 
 // update()
@@ -61,7 +62,6 @@ Ball.prototype.display = function () {
 }
 
 // handleCollision(paddle)
-//
 // Check if this ball overlaps the paddle passed as an argument
 // and if so reverse x velocity to bounce
 Ball.prototype.handleCollision = function(paddle) {
@@ -69,33 +69,33 @@ Ball.prototype.handleCollision = function(paddle) {
   if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w) {
     // Check if the ball overlaps the paddle on y axis
     if (this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
+      beep.play();
       // If so, move ball back to previous position (by subtracting current velocity)
       this.x -= this.vx;
       this.y -= this.vy;
       // Reverse x velocity to bounce
-      this.vx = -this.vx;
+      this.vx = -1.2*this.vx;
     }
   }
-////// NEW //////
-// handle collision w/ bad balls
-  if (this.x + this.size > BadBall.x && this.x < BadBall.x + BadBall.size ) {
-    // Check if the ball overlaps the paddle on y axis
-    if (this.y + this.size > BadBall.y && this.y < BadBall.y + BadBall.size) {
-      // If so, move ball back to previous position (by subtracting current velocity)
-      this.x -= this.vx;
-      this.y -= this.vy;
-      // Reverse x velocity to bounce
-      this.vx = -this.vx;
-    }
-  }
-////// NEW END ///////
-
 }
 
 // reset()
 //
 // Set position back to the middle of the screen
 Ball.prototype.reset = function () {
-  this.x = width/2;
-  this.y = height/2;
+  var ballLeft = this.x;
+  var ballRight = this.x + this.size;
+
+  this.x = width / 2;
+  this.y = height / 2;
+
+  if(ballLeft > width){
+    this.vx = -(random(7,this.maxSpeed));
+    this.vy = -(random(5,this.maxSpeed));
+
+  }
+  else {
+    this.vx = random(7,this.maxSpeed);
+    this.vy = random(5,this.maxSpeed);
+  }
 }
