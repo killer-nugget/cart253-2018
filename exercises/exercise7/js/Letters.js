@@ -17,6 +17,7 @@ Letters.prototype.randomize = function() {
 // display randomizing letters
 Letters.prototype.display = function() {
   fill(0, 255, 0);
+  textFont(myFont);
   textSize(this.size);
   text(dispLetter, this.x, this.y);
 }
