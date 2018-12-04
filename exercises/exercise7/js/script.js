@@ -1,6 +1,7 @@
 // Matrix scroll-in (prototype 1)
 // this program will let you get into the matrix.
 // Good thing you're a bit curious...
+
 // by Carlos Giron-Bran
 
 // array for letters
