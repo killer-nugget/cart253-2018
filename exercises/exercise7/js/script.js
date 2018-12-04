@@ -6,10 +6,11 @@
 
 // array for letters
 var letters = [];
+var titles;
 // setting the size of the letters
-var letterSize =32;
+var letterSize = 32;
 var lColor = 0;
-var sColor=0;
+//var sColor=0;
 var myFont;
 // state variable for switch
 var state="MATRIX";
@@ -27,27 +28,8 @@ function setup() {
     for (var y = random(-600, -700); y < random(0,-100); y += letterSize) {
       letters.push(new Letters(x, y, 0, 0, letterSize));
     }
+    titles = new Titles (width/2,height/2,32,0);
   }
-}
-// fx to display the matrix and + message.
-function matrixOut() {
-  background(255);
-  fill(lColor);
-  textAlign(CENTER, CENTER);
-  text("if you let go, you go back", width / 2, height / 2);
-  // only happens once... decisions,decisions...
-  lColor += 5;
-  // i'm using the color value as a timer of sorts
-  if(lColor >= 500){
-    fill(sColor);
-    textAlign(CENTER, CENTER);
-    text("ok, so you WANT to stay", width / 2, height / 2);
-    sColor++;
-    }
-
-    if (keyIsPressed === false) {
-      state = 'MATRIX';
-    }
 }
 
 function draw() {
@@ -61,7 +43,11 @@ function draw() {
         break;
 
       case 'MATRIX FIRST':
-        matrixOut();
+        titles.firstScreen();
+        break;
+
+      case 'MATRIX SECOND':
+        titles.secondScreen();
         break;
     }
 }
