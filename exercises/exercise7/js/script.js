@@ -24,19 +24,19 @@ function setup() {
   frameRate(24);
   createCanvas(640,480);
   background(0);
+  webcam = new Webcam (width/2,height/2,640,480);
+  webcam.capture.hide();
+  titles = new Titles (width/2,height/2,640,480,32,0);
   // for loop to create randomizing letters for the width of the canvas.
   for (var x = 0; x <= width; x += letterSize-2) {
     for (var y = random(-600, -700); y < random(0,-100); y += letterSize) {
       letters.push(new Letters(x, y, 0, 0, letterSize));
     }
-    titles = new Titles (width/2,height/2,640,480,32,0);
-    webcam = new Webcam (width/2,height/2,640,480);
   }
 }
 
 function draw() {
   background(0, 0, 0, 200);
-
 //switch to toggle between the matrix and the steps to get out of it.
     switch (state) {
 
