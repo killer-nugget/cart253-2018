@@ -1,7 +1,6 @@
-// Matrix (prototype 1)
+// A matrix 
 // this program will let you get into the matrix.
-// Good thing you're a bit curious...
-
+// a situation created to self-reflect.
 // by Carlos Giron-Bran
 
 // array for letters
