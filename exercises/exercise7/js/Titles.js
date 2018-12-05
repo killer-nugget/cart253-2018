@@ -18,7 +18,7 @@ this.color += 5;
 if(this.color >= 500){
   fill(sColor);
   textAlign(CENTER, CENTER);
-  text("ok, so you WANT to stay", this.x, this.y);
+  text("ok... so you WANT to stay", this.x, this.y);
   sColor+=3;
   }
 // again, color values as timer.

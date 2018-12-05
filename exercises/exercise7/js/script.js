@@ -28,7 +28,7 @@ function setup() {
 // creates titles object.
   titles = new Titles (width/2,height/2,640,480,32,0);
   // for loop to create randomizing letters for the width of the canvas.
-  for (var x = 0; x <= width; x += letterSize-2) {
+  for (var x = 0; x <= width; x += letterSize-5) {
     for (var y = random(-600, -700); y < random(0,-100); y += letterSize) {
       letters.push(new Letters(x, y, 0, 0, letterSize));
     }
