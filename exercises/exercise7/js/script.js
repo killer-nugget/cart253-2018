@@ -1,4 +1,4 @@
-// Matrix scroll-in (prototype 1)
+// Matrix (prototype 1)
 // this program will let you get into the matrix.
 // Good thing you're a bit curious...
 
@@ -7,6 +7,7 @@
 // array for letters
 var letters = [];
 var titles;
+var webcam;
 // setting the size of the letters
 var letterSize = 32;
 var lColor = 0;
@@ -21,14 +22,15 @@ function preload(){
 
 function setup() {
   frameRate(24);
-  createCanvas(500,500);
+  createCanvas(640,480);
   background(0);
   // for loop to create randomizing letters for the width of the canvas.
-  for (var x = 0; x <= width; x += letterSize) {
+  for (var x = 0; x <= width; x += letterSize-2) {
     for (var y = random(-600, -700); y < random(0,-100); y += letterSize) {
       letters.push(new Letters(x, y, 0, 0, letterSize));
     }
-    titles = new Titles (width/2,height/2,32,0);
+    titles = new Titles (width/2,height/2,640,480,32,0);
+    webcam = new Webcam (width/2,height/2,640,480);
   }
 }
 
@@ -47,7 +49,8 @@ function draw() {
         break;
 
       case 'MATRIX SECOND':
-        titles.secondScreen();
+        webcam.display();
+
         break;
     }
 }

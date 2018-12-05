@@ -1,10 +1,13 @@
 var sColor = 0;
-var capture;
-function Titles(x, y, size, color) {
+//var capture;
+function Titles(x, y,h,w, size, color) {
   this.x = x;
   this.y = y;
+  this.w=w;
+  this.h=h;
   this.size = size;
   this.color = color;
+  //this.capture=createCapture(VIDEO);
 }
 // fx to display the matrix and + message (first screen).
 Titles.prototype.firstScreen = function() {
@@ -29,11 +32,4 @@ if (sColor >= 500 && keyIsPressed === true) {
     sColor=0;
     state = 'MATRIX';
   }
-}
-// second screen is a self reflective activity. (have to add if --> keyIspressed === false, you go back again)
-Titles.prototype.secondScreen = function() {
-   createCanvas(500,500);
-   capture = createCapture(VIDEO);
-   image(capture, 0, 0, width, width * capture.height / capture.width);
-   filter(GRAY);
 }
