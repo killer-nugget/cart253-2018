@@ -1,5 +1,4 @@
 var sColor = 0;
-//var capture;
 function Titles(x, y,h,w, size, color) {
   this.x = x;
   this.y = y;
@@ -7,10 +6,9 @@ function Titles(x, y,h,w, size, color) {
   this.h=h;
   this.size = size;
   this.color = color;
-  //this.capture=createCapture(VIDEO);
 }
 // fx to display the matrix and + message (first screen).
-Titles.prototype.firstScreen = function() {
+Titles.prototype.display = function() {
 background(255);
 fill(this.color);
 textAlign(CENTER, CENTER);
@@ -23,8 +21,9 @@ if(this.color >= 500){
   text("ok, so you WANT to stay", this.x, this.y);
   sColor+=3;
   }
+// again, color values as timer.
 if (sColor >= 500 && keyIsPressed === true) {
-      state = 'MATRIX SECOND'
+      state = 'SECOND'
 }
   if (keyIsPressed === false) {
 // resets this.color & sColor to 0 so user can see it again.

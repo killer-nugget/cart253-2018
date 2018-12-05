@@ -11,21 +11,21 @@ var webcam;
 // setting the size of the letters
 var letterSize = 32;
 var lColor = 0;
-//var sColor=0;
 var myFont;
 // state variable for switch
 var state="MATRIX";
-
 function preload(){
   myFont= loadFont('assets/font/LEDCalculator.ttf')
 }
-
 function setup() {
+  matrixColor = color(0, 255, 0) ;
   frameRate(24);
   createCanvas(640,480);
   background(0);
+// creating webcam object and hiding the element.
   webcam = new Webcam (width/2,height/2,640,480);
   webcam.capture.hide();
+// creates titles object.
   titles = new Titles (width/2,height/2,640,480,32,0);
   // for loop to create randomizing letters for the width of the canvas.
   for (var x = 0; x <= width; x += letterSize-2) {
@@ -34,23 +34,25 @@ function setup() {
     }
   }
 }
-
 function draw() {
-  background(0, 0, 0, 200);
+  background(0, 0, 0, 180);
 //switch to toggle between the matrix and the steps to get out of it.
     switch (state) {
-
       case 'MATRIX':
         matrix();
+        // displays matrixOut if anykey is pressed.
+        if (keyIsPressed === true) {
+          state = 'FIRST';
+        }
         break;
-
-      case 'MATRIX FIRST':
-        titles.firstScreen();
+      case 'FIRST':
+        titles.display();
         break;
-
-      case 'MATRIX SECOND':
+      case 'SECOND':
         webcam.display();
-
+        break;
+      case 'FINAL':
+        matrix();
         break;
     }
 }
@@ -62,8 +64,4 @@ function matrix() {
     letters[i].display();
     letters[i].down();
   }
-    // displays matrixOut if anykey is pressed.
-    if (keyIsPressed === true) {
-      state = 'MATRIX FIRST';
-    }
 }

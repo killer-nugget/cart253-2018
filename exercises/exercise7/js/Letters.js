@@ -1,6 +1,8 @@
 var randomLetter;
 var dispLetter;
-
+// color variables I can change depending of state.
+var matrixColor;
+var matrixColorF;
 function Letters(x, y, vx, vy, size) {
   this.x = x;
   this.y = y;
@@ -16,10 +18,20 @@ Letters.prototype.randomize = function() {
 }
 // display randomizing letters
 Letters.prototype.display = function() {
-  fill(0, 255, 0);
+// defining colors for matrix and Final Matrix
+  matrixColor=color(0,255,0);
+  matrixColorF=color(255,0,0);
+// if statement to change color of letters if in FINAL state.
+//I did this so i wouldn't have to make another Letters object just for the FINAL state.
+  if (state==='FINAL') {
+  fill(matrixColorF);
+} else {
+    fill(matrixColor);
+}
   textFont(myFont);
   textSize(this.size);
   text(dispLetter, this.x, this.y);
+
 }
 // fx to add velocity downwards to the randomizing letters.
 // and move it by the size of the letters so I can change it on the fly.
